@@ -43,7 +43,7 @@ namespace SP_Processes_1
             //вызываем метод Print от созданного объекта
             Console.WriteLine(Class1Type.GetMethod("myMethod1").Invoke(class1, null));*/
 
-            var result = new Surprise().getSurprise(2);
+            var result = new Surprise().getSurprise(1);
 
             Type resultType = result.GetType();
 
@@ -56,12 +56,22 @@ namespace SP_Processes_1
                 //Console.WriteLine(item.GetValue(result));
             }
 
-            foreach (var item in resultType.GetProperties())
+            //foreach (var item in resultType.GetProperties())
+            //{
+            //    Console.WriteLine(item.Name);
+            //    item.SetValue(result, "Sumkin");
+            //    Console.WriteLine(item.GetValue(result));
+            //}
+
+            foreach (var item in resultType.GetMethods(BindingFlags.Public | BindingFlags.Instance))
             {
                 Console.WriteLine(item.Name);
-                item.SetValue(result, "Sumkin");
-                Console.WriteLine(item.GetValue(result));
+                if (item.Name == "sayHello")
+                {
+                   item.Invoke(result,null);
+                }
             }
+
         }
     }
 }
